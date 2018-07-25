@@ -3,11 +3,14 @@
 
 require 'sinatra'
 require "sinatra/reloader" if development?
+require "erb"
 
 require "./lib/game.rb"
 require "./lib/load.rb"
 
 get '/' do 
+	new_player = Game.new
+	@progess = new_player.progress.join
 	erb :layout
 end	
 

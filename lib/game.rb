@@ -15,7 +15,7 @@ class Game
 		@progress = Array.new(@word_array.size) {"-"}
 		@past_letters = []
 		@game_over = false
-		set_up_display
+		#set_up_display
 			
 	end
 

@@ -1,10 +1,10 @@
 body {
-	background-color: #1FA033;
+	background-color: #51f1af;
 }
 
 #container {
 
-	background-color: #66CCFF;
+	background-color: #51f1af;
 	width: 900px;
 	margin-left: auto;
 	margin-right: auto;
@@ -12,14 +12,14 @@ body {
 }
 
 #header  {
-	background-color: green;
+	background-color: #628cd1;
 	color: white;
 	text-align: center;
 }
 
 #gallows {
 	
-	background-color: #419aa0;
+	background-color: #cdddf7;
 	width: 440px;
 	float: left;
 
@@ -27,14 +27,15 @@ body {
 
 #guess {
 	
-	background-color: #DEC931;
+	background-color: #628cd1;
 	width: 440px;
 	float: right;
+	font-size: 5em;
 
 }
 
 #keyboard {
-	background-color: #e0f218;
+	background-color: #628cd1;
 	clear: both;
 
 }
