@@ -49,7 +49,8 @@ class Game
 			if guess.include? l
 					@progress[x] = l
 					x += 1				
-				else	
+				else
+					@guess_count += 1	
 					x += 1
 				
 				end
@@ -86,7 +87,7 @@ class Game
 	 			puts "You have already picked that letter."
 	 			get_guess
 	 		else	
-	 			@guess_count += 1
+	 			#@guess_count += 1
 	 			@past_letters<<choice
 	 			check_and_print(@word_array, choice)
 	 			

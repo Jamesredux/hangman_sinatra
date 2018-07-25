@@ -9,11 +9,12 @@ require "./lib/load.rb"
 
 get '/' do 
 	"HANGMAN"
+	game = Game.new
 end	
 
 
 class Hangman
-	def initialize
+	def initialize #don't need most of this as game will not have load and save
 		
 		run_game
 	end
@@ -41,6 +42,6 @@ class Hangman
 	
 end
 
-#trevor = Hangman.new
+trevor = Hangman.new
 
 #it's new_game that has to be saved, not trevor
