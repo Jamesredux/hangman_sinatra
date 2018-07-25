@@ -6,7 +6,7 @@ require "yaml"
 
 class Game
 
-	attr_accessor :progress, :guess_count
+	attr_accessor :progress, :guess_count, :past_letters
 
 	def initialize
 		@word = get_word #get word will be a function to randomly pick word from dictionary

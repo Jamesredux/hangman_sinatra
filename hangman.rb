@@ -1,5 +1,5 @@
-#this is where the game will be run from
-#game workings are in main.rb
+#problem game class from get does not seem to be carrying over
+#to the post method. @pastletters etc
 
 require 'sinatra'
 require "sinatra/reloader" if development?
@@ -14,6 +14,59 @@ get '/' do
 	erb :layout
 end	
 
+post '/guess' do 
+	@guess = params["guess"]
+	@past_letters = []
+	checker = Validator.new(@guess, @past_letters)
+	if checker.valid?
+		#check and print
+		erb :index
+	else
+		@message = checker.message
+		erb :layout
+	end		
+end	
+
+
+
+class Validator
+
+	def initialize(guess, past_letters)
+		@guess = guess.downcase
+		@past_letters = past_letters
+		
+	end
+
+	def valid?
+		validate
+		@message.nil?
+	end
+
+	def message
+		@message
+	end
+
+	def validate
+		if @guess.empty?
+			@message = "Please put a guess in the field"
+		elsif valid_input?(@guess) == false
+			@message = "I did not understand that choice, please try again."
+		elsif already_tried?(@guess) == true			
+			@message = "You have already picked that letter"
+		end			
+		
+	end
+
+	def valid_input?(guess)
+		guess ===  /^[a-z]{1}$/  #not working		
+	end
+
+	def already_tried?(guess)
+		@past_letters.include? guess	
+	end
+
+
+end	
 
 class Hangman
 	def initialize
