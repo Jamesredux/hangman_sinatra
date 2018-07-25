@@ -8,17 +8,12 @@ require "./lib/game.rb"
 require "./lib/load.rb"
 
 get '/' do 
-<<<<<<< HEAD
-	"HANGMAN"
-	game = Game.new
-=======
 	erb :layout
->>>>>>> master
 end	
 
 
 class Hangman
-	def initialize #don't need most of this as game will not have load and save
+	def initialize
 		
 		run_game
 	end
@@ -46,6 +41,6 @@ class Hangman
 	
 end
 
-trevor = Hangman.new
+#trevor = Hangman.new
 
 #it's new_game that has to be saved, not trevor
