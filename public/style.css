@@ -1,0 +1,48 @@
+body {
+	background-color: #1FA033;
+}
+
+#container {
+
+	background-color: #66CCFF;
+	width: 900px;
+	margin-left: auto;
+	margin-right: auto;
+
+}
+
+#header  {
+	background-color: green;
+	color: white;
+	text-align: center;
+}
+
+#gallows {
+	
+	background-color: #419aa0;
+	width: 440px;
+	float: left;
+
+}
+
+#guess {
+	
+	background-color: #DEC931;
+	width: 440px;
+	float: right;
+
+}
+
+#keyboard {
+	background-color: #e0f218;
+	clear: both;
+
+}
+
+#content {
+	padding: 10px;
+
+}
+p {
+	padding: 10px;
+}
