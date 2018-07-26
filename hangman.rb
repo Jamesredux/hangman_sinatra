@@ -8,9 +8,11 @@ require "erb"
 require "./lib/game.rb"
 require "./lib/load.rb"
 
+enable :sessions
+
 get '/' do 
-	new_player = Game.new
-	@progess = new_player.progress.join
+	@new_player = Game.new
+	@progess = @new_player.progress.join
 	erb :layout
 end	
 
@@ -19,8 +21,8 @@ post '/guess' do
 	@past_letters = []
 	checker = Validator.new(@guess, @past_letters)
 	if checker.valid?
-		#check and print
-		erb :index
+		@message = "I will check your guess now"
+		redirect "/" #redirect or erb here? redirect i think
 	else
 		@message = checker.message
 		erb :layout
@@ -49,7 +51,7 @@ class Validator
 	def validate
 		if @guess.empty?
 			@message = "Please put a guess in the field"
-		elsif valid_input?(@guess) == false
+		elsif invalid_input?(@guess) == true
 			@message = "I did not understand that choice, please try again."
 		elsif already_tried?(@guess) == true			
 			@message = "You have already picked that letter"
@@ -57,8 +59,8 @@ class Validator
 		
 	end
 
-	def valid_input?(guess)
-		guess ===  /^[a-z]{1}$/  #not working		
+	def invalid_input?(guess)
+		(guess.match  /^[a-z]{1}$/).nil?		
 	end
 
 	def already_tried?(guess)
