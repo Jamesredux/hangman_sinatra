@@ -12,8 +12,10 @@ get '/' do
 	session[:game] = Game.new
 	session[:progess] = session[:game].progress
 	session[:answer] = session[:game].word
+	session[:guess_count] = session[:game].guess_count
 	@progess = session[:progess]
 	@secret_word = session[:answer]
+	@guess_count = session[:guess_count]
 	erb :layout
 end	
 
@@ -34,12 +36,17 @@ post '/guess' do
 			end		
 		end
 	else
+		session[:guess_count] = session[:game].guess_count
+		@guess_count = session[:guess_count]
+
 		@message = checker.message
 		erb :layout
 	end		
 end	
 
 get '/guess' do 
+	session[:guess_count] = session[:game].guess_count
+	#@guess_count = session[:guess_count]
 	session[:progess] = session[:game].progress
 	session[:answer] = session[:game].word
 	@progess = session[:progess]
@@ -52,6 +59,8 @@ get '/guess' do
 end	
 
 get '/loser' do 
+	session[:guess_count] = session[:game].guess_count
+	@guess_count = session[:guess_count]
 	@message = "you lost loser"
 	erb :layout
 
@@ -59,11 +68,15 @@ get '/loser' do
 end	
 
 get '/win' do 
+	session[:guess_count] = session[:game].guess_count
+	@guess_count = session[:guess_count]
 	@message = "you solved it"
 	erb :layout
 end	
 
 get '/gameover' do 
+	session[:guess_count] = session[:game].guess_count
+	@guess_count = session[:guess_count]
 	@message = "you died game over"
 	erb :layout
 
@@ -79,7 +92,7 @@ helpers do
 		def initialize
 			@word = get_word 
 			@word_array = @word.chars
-			@guess_count = 0 
+			@guess_count = 4
 			@progress = Array.new(@word_array.size) {"-"}
 			@past_letters = []
 			@game_over = false			
@@ -119,7 +132,7 @@ helpers do
 		end
 
 		def time_up?
-			if @guess_count > 5
+			if @guess_count > 9
 				true
 			end			
 		end	
