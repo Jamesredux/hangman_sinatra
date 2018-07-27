@@ -1,33 +1,138 @@
-#problem game class from get does not seem to be carrying over
-#to the post method. @pastletters etc
 
 require 'sinatra'
 require "sinatra/reloader" if development?
 require "erb"
 
-require "./lib/game.rb"
-require "./lib/load.rb"
+#require "./lib/game.rb"
+#require "./lib/load.rb"
 
 enable :sessions
 
 get '/' do 
-	@new_player = Game.new
-	@progess = @new_player.progress.join
+	session[:game] = Game.new
+	session[:progess] = session[:game].progress
+	session[:answer] = session[:game].word
+	@progess = session[:progess]
+	@secret_word = session[:answer]
 	erb :layout
 end	
 
 post '/guess' do 
 	@guess = params["guess"]
-	@past_letters = []
+	@past_letters = session[:game].past_letters
 	checker = Validator.new(@guess, @past_letters)
 	if checker.valid?
-		@message = "I will check your guess now"
-		redirect "/" #redirect or erb here? redirect i think
+		session[:game].past_letters<<@guess
+		session[:game].check_guess(session[:game].word_array, @guess)
+		if session[:game].solved?
+			redirect "/win"
+		else
+			if session[:game].time_up?
+				redirect "./gameover"
+			else		
+				redirect "/guess"
+			end		
+		end
 	else
 		@message = checker.message
 		erb :layout
 	end		
 end	
+
+get '/guess' do 
+	session[:progess] = session[:game].progress
+	session[:answer] = session[:game].word
+	@progess = session[:progess]
+	@secret_word = session[:answer]
+	erb :layout
+
+
+
+
+end	
+
+get '/loser' do 
+	@message = "you lost loser"
+	erb :layout
+
+
+end	
+
+get '/win' do 
+	@message = "you solved it"
+	erb :layout
+end	
+
+get '/gameover' do 
+	@message = "you died game over"
+	erb :layout
+
+end
+
+helpers do 
+
+
+	class Game
+
+	attr_accessor :progress, :guess_count, :past_letters, :word, :word_array
+
+		def initialize
+			@word = get_word 
+			@word_array = @word.chars
+			@guess_count = 0 
+			@progress = Array.new(@word_array.size) {"-"}
+			@past_letters = []
+			@game_over = false			
+		end
+
+		
+		def get_word
+			words = File.readlines("./data/dict3000.txt")   #there are 2 dics the one suggested has a lot of wierd words so i just used the 3000 most common english words
+			word = words.select { |w| w.size > 4 && w.size <  13 }.sample
+			word = word.downcase.chomp
+		end	
+
+		def check_guess(word_array, guess='$')
+			@correct_guess = false
+			x = 0
+			word_array.each do |l|
+				if guess.include? l
+						@progress[x] = l
+						x += 1				
+						@correct_guess = true
+				else
+					x += 1
+				end
+			end
+
+			@guess_count += 1 if @correct_guess == false
+
+		end
+
+		def solved?
+			if @progress.include? "-"
+				false
+			else
+				true
+			end		
+
+		end
+
+		def time_up?
+			if @guess_count > 5
+				true
+			end			
+		end	
+
+
+
+	end	
+
+
+
+end	
+
+
 
 
 

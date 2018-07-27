@@ -26,6 +26,7 @@ class Game
 		word = word.downcase.chomp
 	end	
 
+
 	def set_up_display
 		puts  "Welcome to hangman - you have 11 guesses. Here is the word you have to guess.."
 		puts ""
@@ -122,7 +123,7 @@ class Game
 
 	end
 
-	def win_game
+	#def win_game
 		puts "Congratulations you correctly guessed \"#{@word}\""
 		@game_over = true
 		
