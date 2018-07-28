@@ -1,16 +1,16 @@
 body {
-	background-color: #51f1af;
+	background-color: #e29d36;
 }
 
 #progress {
 
-	background-color: green;
+	background-color: #e29d36;
 	font-size: 2em;
 }
 
 #container {
 
-	background-color: #51f1af;
+	background-color: #e29d36;
 	width: 900px;
 	margin-left: auto;
 	margin-right: auto;
@@ -25,7 +25,7 @@ body {
 
 #gallows {
 	
-	background-color: #cdddf7;
+	background-color: #628cd1;
 	width: 440px;
 	float: left;
 
@@ -45,6 +45,7 @@ body {
 #input {
 	background-color: #628cd1;
 	clear: both;
+	font-size: 1.5em;
 
 }
 

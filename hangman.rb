@@ -13,9 +13,6 @@ get '/new_game' do
 	session[:progess] = session[:game].progress.join
 	session[:answer] = session[:game].word
 	session[:guess_count] = session[:game].guess_count
-	#@progess = session[:progess]
-	#@secret_word = session[:answer]
-	@guess_count = session[:guess_count]
 	@message_1 = "You have #{10-session[:guess_count]} guesses left."
 	erb :index		
 end	
@@ -24,22 +21,19 @@ post '/guess' do
 	@guess = params["guess"]
 	@past_letters = session[:game].past_letters
 	checker = Validator.new(@guess, @past_letters)
-	if checker.valid?
-		session[:game].past_letters<<@guess
-		session[:game].check_guess(session[:game].word_array, @guess)
-		if session[:game].solved?
-			redirect "/win"
+		if checker.valid?
+			session[:game].past_letters<<@guess
+			session[:game].check_guess(session[:game].word_array, @guess)
+				if session[:game].solved?
+					redirect "/win"
+				else
+					if session[:game].time_up?
+						redirect "/gameover"
+					else		
+						redirect "/guess"
+					end		
+				end
 		else
-			if session[:game].time_up?
-				redirect "./gameover"
-			else		
-				redirect "/guess"
-			end		
-		end
-	else
-		session[:guess_count] = session[:game].guess_count
-		#@guess_count = session[:guess_count]
-
 		@message_1 = checker.message
 		erb :index
 	end		
@@ -47,32 +41,22 @@ end
 
 get '/guess' do 
 	session[:guess_count] = session[:game].guess_count
-	#@guess_count = session[:guess_count]
 	session[:progess] = session[:game].progress.join
-	session[:answer] = session[:game].word
-	#@progess = session[:progess]
-	#@secret_word = session[:answer]
 	@message_1 = "You have #{10-session[:guess_count]} guesses left."
 	erb :index
-
-
 end	
 
 
 get '/win' do 
-	session[:guess_count] = session[:game].guess_count
-	#@guess_count = session[:guess_count]
-
+	@pic = "safe"
 	@message_1 = "Congratulations you guessed the word - #{session[:answer]}"
 	erb :endgame
 end	
 
 get '/gameover' do 
-	session[:guess_count] = session[:game].guess_count
-	#@guess_count = session[:guess_count]
+	@pic = "10"
 	@message_1 = "You lose, the word was #{session[:answer]}"
 	erb :endgame
-
 end
 
 helpers do 
@@ -87,8 +71,7 @@ helpers do
 			@word_array = @word.chars
 			@guess_count = 4
 			@progress = Array.new(@word_array.size) {"-"}
-			@past_letters = []
-			@game_over = false			
+			@past_letters = []			
 		end
 
 		

@@ -5,15 +5,17 @@
 	<title>Hangman</title>
 	<link rel="stylesheet" type="text/css" href="/style.css" />
 </head>
+
 <body>
 	<div id="container">
 		<div id="header">
 			<h1>James's Hangman Game</h1>
 		</div>
+
 		<div id="content">
 			<div id="gallows">
 				<p>
-				<img id="picture" src="/images/<%= session[:guess_count] %>.jpg" alt="gallows img" style="width:300px;height:300px;"/>
+				<img id="picture" src="/images/<%= @pic %>.jpg" alt="gallows img" style="width:300px;height:300px;"/>
 				</p>
 			</div>
 			<div id="guess">
@@ -24,8 +26,8 @@
 				<% if @message_2 %>
 					<p><%= @message_2 %></p>
 				<% end %>	
-<!--				<p><%= @secret_word %></p>   -->
 			</div>
+			
 			<div id= "input">
 					<p>Would you like to play again</p>
 				<a href="/new_game">PLAY AGAIN</a>
