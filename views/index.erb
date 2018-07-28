@@ -17,14 +17,19 @@
 				</p>
 			</div>
 			<div id="guess">
-				<% if @message %>
-					<p><%= @message %></p>
+				
+				<div id="progress">
+					<p><%= session[:progess] %></p>
+				</div>
+				<% if @message_1 %>
+					<p><%= @message_1 %></p>
 				<% end %>	
-
-				<p><%= @progess %></p>
+				<% if @message_2 %>
+					<p><%= @message_2 %></p>
+				<% end %>	
 <!--				<p><%= @secret_word %></p>   -->
 			</div>
-			<div id= "keyboard">
+			<div id= "input">
 				<p>Please input your guess. </p>
 				<form action="/guess" method="post">
 					<input type="text" name="guess">

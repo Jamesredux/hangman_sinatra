@@ -1,19 +1,23 @@
 
 require 'sinatra'
 require "sinatra/reloader" if development?
-require "erb"
 
 enable :sessions
 
 get '/' do 
+	erb :intro
+end	
+
+get '/new_game' do 
 	session[:game] = Game.new
-	session[:progess] = session[:game].progress
+	session[:progess] = session[:game].progress.join
 	session[:answer] = session[:game].word
 	session[:guess_count] = session[:game].guess_count
-	@progess = session[:progess]
-	@secret_word = session[:answer]
+	#@progess = session[:progess]
+	#@secret_word = session[:answer]
 	@guess_count = session[:guess_count]
-	erb :layout
+	@message_1 = "You have #{10-session[:guess_count]} guesses left."
+	erb :index		
 end	
 
 post '/guess' do 
@@ -36,19 +40,20 @@ post '/guess' do
 		session[:guess_count] = session[:game].guess_count
 		#@guess_count = session[:guess_count]
 
-		@message = checker.message
-		erb :layout
+		@message_1 = checker.message
+		erb :index
 	end		
 end	
 
 get '/guess' do 
 	session[:guess_count] = session[:game].guess_count
 	#@guess_count = session[:guess_count]
-	session[:progess] = session[:game].progress
+	session[:progess] = session[:game].progress.join
 	session[:answer] = session[:game].word
-	@progess = session[:progess]
-	@secret_word = session[:answer]
-	erb :layout
+	#@progess = session[:progess]
+	#@secret_word = session[:answer]
+	@message_1 = "You have #{10-session[:guess_count]} guesses left."
+	erb :index
 
 
 end	
@@ -58,15 +63,15 @@ get '/win' do
 	session[:guess_count] = session[:game].guess_count
 	#@guess_count = session[:guess_count]
 
-	@message = "Congratulations you guessed the word - #{session[:answer]}"
-	erb :layout
+	@message_1 = "Congratulations you guessed the word - #{session[:answer]}"
+	erb :endgame
 end	
 
 get '/gameover' do 
 	session[:guess_count] = session[:game].guess_count
 	#@guess_count = session[:guess_count]
-	@message = "You lose, the word was #{session[:answer]}"
-	erb :layout
+	@message_1 = "You lose, the word was #{session[:answer]}"
+	erb :endgame
 
 end
 

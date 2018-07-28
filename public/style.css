@@ -2,6 +2,12 @@ body {
 	background-color: #51f1af;
 }
 
+#progress {
+
+	background-color: green;
+	font-size: 2em;
+}
+
 #container {
 
 	background-color: #51f1af;
@@ -31,10 +37,12 @@ body {
 	width: 440px;
 	float: right;
 	font-size: 2em;
+	height: 352px;
+	
 
 }
 
-#keyboard {
+#input {
 	background-color: #628cd1;
 	clear: both;
 
@@ -44,6 +52,9 @@ body {
 	padding: 10px;
 
 }
+
+
+
 p {
 	padding: 10px;
 }
@@ -53,4 +64,9 @@ img {
     display: block;
     margin-left: auto;
     margin-right: auto;
+}
+
+form {
+	padding-bottom: 10px;
+	padding-left: 20px;
 }
