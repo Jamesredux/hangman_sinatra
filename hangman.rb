@@ -8,8 +8,17 @@ get '/' do
 	erb :intro
 end	
 
-get '/new_game' do 
-	session[:game] = Game.new
+get '/easy_game' do 
+	session[:game] = Game.new("dict3000")
+	session[:progess] = session[:game].progress.join
+	session[:answer] = session[:game].word
+	session[:guess_count] = session[:game].guess_count
+	@message_1 = "You have #{10-session[:guess_count]} guesses left."
+	erb :index		
+end	
+
+get '/hard_game' do 
+	session[:game] = Game.new("dict")
 	session[:progess] = session[:game].progress.join
 	session[:answer] = session[:game].word
 	session[:guess_count] = session[:game].guess_count
@@ -66,8 +75,9 @@ helpers do
 
 	attr_accessor :progress, :guess_count, :past_letters, :word, :word_array
 
-		def initialize
-			@word = get_word 
+		def initialize(difficulty)
+			dictionary = difficulty
+			@word = get_word(difficulty) 
 			@word_array = @word.chars
 			@guess_count = 4
 			@progress = Array.new(@word_array.size) {"_"}
@@ -75,8 +85,8 @@ helpers do
 		end
 
 		
-		def get_word
-			words = File.readlines("./data/dict3000.txt")   #there are 2 dics the one suggested has a lot of wierd words so i just used the 3000 most common english words
+		def get_word(difficulty)
+			words = File.readlines("./data/#{difficulty}.txt")   #there are 2 dics the one suggested has a lot of wierd words so i just used the 3000 most common english words
 			word = words.select { |w| w.size > 4 && w.size <  13 }.sample
 			word = word.downcase.chomp
 		end	
