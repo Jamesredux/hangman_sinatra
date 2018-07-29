@@ -13,7 +13,7 @@ get '/easy_game' do
 	session[:progess] = session[:game].progress.join
 	session[:answer] = session[:game].word
 	session[:guess_count] = session[:game].guess_count
-	@message_1 = "You have #{10-session[:guess_count]} guesses left."
+	@message_1 = "You have #{6-session[:guess_count]} guesses left."
 	erb :index		
 end	
 
@@ -22,7 +22,7 @@ get '/hard_game' do
 	session[:progess] = session[:game].progress.join
 	session[:answer] = session[:game].word
 	session[:guess_count] = session[:game].guess_count
-	@message_1 = "You have #{10-session[:guess_count]} guesses left."
+	@message_1 = "You have #{6-session[:guess_count]} guesses left."
 	erb :index		
 end	
 
@@ -51,7 +51,7 @@ end
 get '/guess' do 
 	session[:guess_count] = session[:game].guess_count
 	session[:progess] = session[:game].progress.join
-	@message_1 = "You have #{10-session[:guess_count]} guesses left."
+	@message_1 = "You have #{6-session[:guess_count]} guesses left."
 	erb :index
 end	
 
@@ -62,7 +62,7 @@ get '/win' do
 end	
 
 get '/gameover' do 
-	@pic = "10"
+	@pic = "6"
 	@message_1 = "You lose. The word was #{session[:answer].upcase}"
 	erb :endgame
 end
@@ -77,7 +77,7 @@ helpers do
 			dictionary = difficulty
 			@word = get_word(difficulty) 
 			@word_array = @word.chars
-			@guess_count = 4
+			@guess_count = 0
 			@progress = Array.new(@word_array.size) {"_"}
 			@past_letters = []			
 		end
@@ -115,7 +115,7 @@ helpers do
 		end
 
 		def time_up?
-			if @guess_count > 9
+			if @guess_count > 6
 				true
 			end			
 		end	
