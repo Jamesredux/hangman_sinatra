@@ -115,7 +115,7 @@ helpers do
 		end
 
 		def time_up?
-			if @guess_count > 6
+			if @guess_count > 5
 				true
 			end			
 		end	
