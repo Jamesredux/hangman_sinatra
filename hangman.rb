@@ -55,7 +55,6 @@ get '/guess' do
 	erb :index
 end	
 
-
 get '/win' do 
 	@pic = "safe"
 	@message_1 = "Congratulations. You Survived. The word was - #{session[:answer].upcase}"
@@ -70,7 +69,6 @@ end
 
 helpers do 
 
-
 	class Game
 
 	attr_accessor :progress, :guess_count, :past_letters, :word, :word_array
@@ -84,7 +82,6 @@ helpers do
 			@past_letters = []			
 		end
 
-		
 		def get_word(difficulty)
 			words = File.readlines("./data/#{difficulty}.txt")   #there are 2 dics the one suggested has a lot of wierd words so i just used the 3000 most common english words
 			word = words.select { |w| w.size > 4 && w.size <  13 }.sample
@@ -127,15 +124,11 @@ helpers do
 end	
 
 
-
-
-
 class Validator
 
 	def initialize(guess, past_letters)
 		@guess = guess.downcase
-		@past_letters = past_letters
-		
+		@past_letters = past_letters	
 	end
 
 	def valid?
@@ -153,7 +146,7 @@ class Validator
 		elsif invalid_input?(@guess) == true
 			@message = "I did not understand that choice, please try again."
 		elsif already_tried?(@guess) == true			
-			@message = "You have already picked that letter"
+			@message = "You have already tried that letter"
 		end			
 		
 	end
