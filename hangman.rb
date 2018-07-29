@@ -49,13 +49,13 @@ end
 
 get '/win' do 
 	@pic = "safe"
-	@message_1 = "Congratulations you guessed the word - #{session[:answer]}"
+	@message_1 = "Congratulations. You Survived. The word was - #{session[:answer].upcase}"
 	erb :endgame
 end	
 
 get '/gameover' do 
 	@pic = "10"
-	@message_1 = "You lose, the word was #{session[:answer]}"
+	@message_1 = "You lose. The word was #{session[:answer].upcase}"
 	erb :endgame
 end
 
@@ -70,7 +70,7 @@ helpers do
 			@word = get_word 
 			@word_array = @word.chars
 			@guess_count = 4
-			@progress = Array.new(@word_array.size) {"-"}
+			@progress = Array.new(@word_array.size) {"_"}
 			@past_letters = []			
 		end
 
@@ -99,7 +99,7 @@ helpers do
 		end
 
 		def solved?
-			if @progress.include? "-"
+			if @progress.include? "_"
 				false
 			else
 				true
@@ -112,12 +112,7 @@ helpers do
 				true
 			end			
 		end	
-
-
-
 	end	
-
-
 
 end	
 
@@ -160,8 +155,6 @@ class Validator
 	def already_tried?(guess)
 		@past_letters.include? guess	
 	end
-
-
 end	
 
 

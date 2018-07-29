@@ -16,17 +16,19 @@
 				<img id="picture" src="/images/<%= session[:guess_count] %>.jpg" alt="gallows img" style="width:300px;height:300px;"/>
 				</p>
 			</div>
-			<div id="guess">
+			<div id="feedback">
 				
 				<div id="progress">
 					<p><%= session[:progess] %></p>
 				</div>
+				<div id="message">
 				<% if @message_1 %>
 					<p><%= @message_1 %></p>
 				<% end %>	
 				<% if @message_2 %>
 					<p><%= @message_2 %></p>
 				<% end %>	
+			</div>
 			</div>
 			<div id= "input">
 				<p>Please input your guess. </p>
